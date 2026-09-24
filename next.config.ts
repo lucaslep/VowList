@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/casamento/lucas-e-gabriella',
+        permanent: false,
+      },
+    ]
+  },
 };
 
 export default nextConfig;

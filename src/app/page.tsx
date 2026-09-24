@@ -1,69 +1,67 @@
-import Image from "next/image";
+import Link from 'next/link'
+
+const benefits = [
+  ['01', 'Sua lista, do seu jeito', 'Escolha os presentes que combinam com a nova vida de vocês.'],
+  ['02', 'Um link para compartilhar', 'Envie junto ao convite e deixe tudo simples para os convidados.'],
+  ['03', 'Feito com carinho', 'Uma experiência bonita, delicada e fácil de usar em qualquer tela.'],
+]
+
+function Brand() {
+  return (
+    <Link href="/" className="brand" aria-label="VowList — página inicial">
+      <span className="brand-mark" aria-hidden="true">V</span><span>VowList</span>
+    </Link>
+  )
+}
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="landing-shell">
+      <nav className="site-nav" aria-label="Navegação principal">
+        <Brand />
+        <div className="nav-actions">
+          <Link href="/login" className="text-link">Entrar</Link>
+          <Link href="/cadastro" className="button button-primary button-small">Criar minha lista</Link>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </nav>
+
+      <section className="hero-section">
+        <div className="hero-copy">
+          <span className="eyebrow"><span>✦</span> Celebre o amor, compartilhe sonhos</span>
+          <h1>O começo da vida a dois merece ser <em>inesquecível.</em></h1>
+          <p>Crie uma lista de presentes elegante, pessoal e fácil de compartilhar com quem faz parte da história de vocês.</p>
+          <div className="hero-actions">
+            <Link href="/cadastro" className="button button-primary">Criar nossa lista <span aria-hidden="true">→</span></Link>
+            <a href="#como-funciona" className="button button-ghost">Como funciona</a>
+          </div>
+          <div className="trust-row">
+            <div className="avatar-stack" aria-hidden="true"><span>A</span><span>M</span><span>L</span></div>
+            <p><strong>Feito para celebrar</strong><br />cada história de amor</p>
+          </div>
         </div>
-      </main>
-    </div>
-  );
+
+        <div className="hero-art" aria-label="Prévia de uma lista de casamento elegante">
+          <div className="orb orb-one" /><div className="orb orb-two" />
+          <div className="invite-card">
+            <div className="invite-flourish">⌁</div><span className="invite-kicker">vamos nos casar</span>
+            <h2>Lucas <i>&</i> Gabriella</h2><div className="invite-rule"><span>✦</span></div>
+            <p>09 · 01 · 2028</p><span className="invite-note">Nossa maior alegria é celebrar com você</span>
+          </div>
+          <div className="floating-card floating-gift"><span className="floating-icon">♢</span><div><strong>Lista personalizada</strong><small>Escolhida pelo casal</small></div></div>
+          <div className="floating-card floating-love"><span>♡</span> Feito com amor</div>
+          <div className="botanical botanical-left">❧</div><div className="botanical botanical-right">❧</div>
+        </div>
+      </section>
+
+      <section id="como-funciona" className="benefits-section">
+        <div className="section-heading"><span className="eyebrow">Simples em cada detalhe</span><h2>Tudo para o grande dia</h2><p>Vocês cuidam dos sonhos. A gente deixa a lista linda e organizada.</p></div>
+        <div className="benefits-grid">
+          {benefits.map(([number, title, description]) => <article key={number} className="benefit-card"><span>{number}</span><h3>{title}</h3><p>{description}</p></article>)}
+        </div>
+      </section>
+
+      <section className="final-cta"><span>✦</span><h2>Prontos para começar?</h2><p>Crie agora a lista que vai fazer parte desse capítulo tão especial.</p><Link href="/cadastro" className="button button-light">Criar nossa lista</Link></section>
+      <footer className="site-footer"><Brand /><p>Para histórias que começam com “sim”.</p></footer>
+    </main>
+  )
 }
