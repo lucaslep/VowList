@@ -8,7 +8,36 @@ type Props={weddingId:string|null;gifts:Gift[];pix?:string;deliveryAddress?:stri
 
 export default function WeddingExperience({weddingId,gifts:initialGifts,pix,deliveryAddress}:Props){
   const supabase=createClient();const [gifts,setGifts]=useState(initialGifts);const [selected,setSelected]=useState<Gift|null>(null);const [guestName,setGuestName]=useState('');const [guestPhone,setGuestPhone]=useState('');const [giftMessage,setGiftMessage]=useState('');const [rsvpMessage,setRsvpMessage]=useState('');const [loading,setLoading]=useState(false);const [attending,setAttending]=useState(true);const [companionCount,setCompanionCount]=useState(0)
-  async function reserveGift(event:React.FormEvent<HTMLFormElement>){event.preventDefault();if(!selected)return;setLoading(true);setGiftMessage('');const {data,error}=await supabase.rpc('reserve_gift',{p_gift_id:selected.id,p_guest_name:guestName.trim(),p_guest_phone:guestPhone.trim()});if(error||!data){setGiftMessage(error?.message??'Este presente já foi escolhido por outra pessoa.');setLoading(false);return}setGifts(current=>current.map(gift=>gift.id===selected.id?{...gift,status:'reserved'}:gift));setGiftMessage('Presente reservado com sucesso! Abrindo a loja...');if(selected.product_url)window.open(selected.product_url,'_blank','noopener,noreferrer');setLoading(false)}
+  async function reserveGift(event:React.FormEvent<HTMLFormElement>){
+    event.preventDefault()
+    if(!selected)return
+
+    const storeWindow=selected.product_url?window.open('about:blank','_blank'):null
+    setLoading(true)
+    setGiftMessage('')
+
+    try{
+      const {data,error}=await supabase.rpc('reserve_gift',{p_gift_id:selected.id,p_guest_name:guestName.trim(),p_guest_phone:guestPhone.trim()}).abortSignal(AbortSignal.timeout(15000))
+      if(error||!data){
+        storeWindow?.close()
+        setGiftMessage(error?.message??'Este presente já foi escolhido por outra pessoa.')
+        return
+      }
+
+      setGifts(current=>current.map(gift=>gift.id===selected.id?{...gift,status:'reserved'}:gift))
+      setGiftMessage('Presente reservado com sucesso!')
+
+      if(selected.product_url){
+        if(storeWindow){storeWindow.opener=null;storeWindow.location.href=selected.product_url}
+        else setGiftMessage('Presente reservado. O navegador bloqueou a loja; permita pop-ups e tente abrir novamente.')
+      }
+    }catch{
+      storeWindow?.close()
+      setGiftMessage('Não foi possível concluir a reserva. Verifique sua conexão e tente novamente.')
+    }finally{
+      setLoading(false)
+    }
+  }
   async function submitRsvp(event:React.FormEvent<HTMLFormElement>){event.preventDefault();if(!weddingId)return;setLoading(true);setRsvpMessage('');const form=new FormData(event.currentTarget);const companionNames=attending?Array.from({length:companionCount},(_,index)=>String(form.get(`companion_${index}`)).trim()):[];const {error}=await supabase.from('rsvps').insert({wedding_id:weddingId,guest_name:String(form.get('name')).trim(),phone:String(form.get('phone')).trim(),attending,companions:companionNames.length,companion_names:companionNames});setRsvpMessage(error?error.message:'Presença registrada. Obrigado pela confirmação!');if(!error){event.currentTarget.reset();setAttending(true);setCompanionCount(0)}setLoading(false)}
   return <>
     <section id="confirmacao" className="rsvp-section"><div className="section-heading"><span className="eyebrow">Esperamos você</span><h2>Confirme sua presença</h2><p>Preencha os dados para nos ajudar na organização desse dia especial.</p></div><form className="rsvp-form" onSubmit={submitRsvp}><input name="name" placeholder="Seu nome completo" required/><input name="phone" type="tel" placeholder="Telefone com DDD" required/><select name="attending" value={attending?'yes':'no'} onChange={event=>{const willAttend=event.target.value==='yes';setAttending(willAttend);if(!willAttend)setCompanionCount(0)}} required><option value="yes">Sim, estarei presente</option><option value="no">Não poderei comparecer</option></select>{attending&&<label className="companions-field">Quantidade de acompanhantes<input name="companions" type="number" min="0" max="10" value={companionCount} onChange={event=>setCompanionCount(Math.min(10,Math.max(0,Number(event.target.value))))} required/></label>}{attending&&Array.from({length:companionCount},(_,index)=><input className="companion-name" key={index} name={`companion_${index}`} placeholder={`Nome do acompanhante ${index+1}`} required/>)}<button className="primary-action" disabled={loading||!weddingId}>Confirmar presença</button>{rsvpMessage&&<p className="form-message">{rsvpMessage}</p>}</form></section>
