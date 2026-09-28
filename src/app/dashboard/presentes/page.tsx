@@ -131,6 +131,13 @@ export default async function PresentesPage() {
                       {gift.description}
                     </p>
                   )}
+
+                  <Link
+                    href={`/dashboard/presentes/${gift.id}/editar`}
+                    className="secondary-action mt-5 w-full"
+                  >
+                    Alterar presente
+                  </Link>
                 </div>
               </article>
             ))}
