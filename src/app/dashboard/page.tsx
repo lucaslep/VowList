@@ -96,6 +96,13 @@ export default async function DashboardPage() {
                 >
                   Ver página pública
                 </Link>
+
+                <Link
+                  href="/dashboard/confirmacoes"
+                  className="secondary-action"
+                >
+                  Ver confirmações
+                </Link>
               </div>
             </div>
           )}
