@@ -47,7 +47,7 @@ export default function WeddingExperience({weddingId,gifts:initialGifts,pix,deli
       <div className="ceremony-icon" aria-hidden="true">♡</div>
       <h2 id="ceremony-title">Milícia da Imaculada</h2>
       <span className="ceremony-label">Cerimônia</span>
-      <strong className="ceremony-date">09/01/2028</strong>
+      <strong className="ceremony-date">22/01/2028</strong>
       <blockquote>“Super omnia autem haec caritatem, quod est vinculum perfectionis.” <cite>— Colossenses 3:14</cite></blockquote>
       <address>Estrada do Morro Grande, 870, no bairro dos Finco, na região do Riacho Grande</address>
       <a className="ceremony-map-button" href={ceremonyMapsUrl} target="_blank" rel="noopener noreferrer">Abrir com Google Maps</a>

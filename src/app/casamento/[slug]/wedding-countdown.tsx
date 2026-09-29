@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-const weddingTimestamp = new Date('2028-01-09T17:00:00-03:00').getTime()
+const weddingTimestamp = new Date('2028-01-22T17:00:00-03:00').getTime()
 
 type RemainingTime = {
   days: number
