@@ -6,7 +6,7 @@ import WeddingExperience from './wedding-experience'
 type Gift = { id:string; name:string; description:string|null; price:number|null; image_url:string|null; product_url:string|null; status:string }
 type Wedding = { id:string|null; partner_one:string; partner_two:string; wedding_date:string|null; description:string|null; location?:string; pix?:string; monogram?:string; deliveryAddress?:string }
 
-const personalizedWedding:Wedding={id:null,partner_one:'Lucas',partner_two:'Gabriella',wedding_date:'2028-01-22',description:'Itaque iam non sunt duo, sed una caro. Quod ergo Deus coniunxit, homo non separet. — Matthaeus 19:6',location:'Milícia da Imaculada · São Bernardo do Campo',pix:'11933201483',monogram:'L + G',deliveryAddress:'Av Sete de Setembro 120'}
+const personalizedWedding:Wedding={id:null,partner_one:'Lucas',partner_two:'Gabriella',wedding_date:'2028-01-22',description:'Assim, já não são dois, mas uma só carne. O que Deus uniu, o homem não separe. — Mateus 19:6',location:'Rua Darwin, 651 · Santo Amaro · São Paulo - SP',pix:'11933201483',monogram:'L + G',deliveryAddress:'Av Sete de Setembro 120'}
 
 function formatDate(value:string|null){if(!value)return null;return new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(`${value}T00:00:00Z`))}
 
@@ -24,7 +24,7 @@ export default async function WeddingPage({params}:PageProps<'/casamento/[slug]'
       <div className="wedding-monogram">{wedding.monogram??<>{wedding.partner_one.charAt(0)} <i>&</i> {wedding.partner_two.charAt(0)}</>}</div>
       <span className="wedding-kicker">Com alegria, convidamos você a celebrar</span>
       <h1>{wedding.partner_one} <em>&</em> {wedding.partner_two}</h1>
-      {wedding.wedding_date&&<p className="wedding-date">{formatDate(wedding.wedding_date)}</p>}
+      {wedding.wedding_date&&<p className="wedding-date">{formatDate(wedding.wedding_date)} · 18h00</p>}
       {wedding.location&&<p className="wedding-location">⌖ {wedding.location}</p>}
       <div className="invite-rule"><span>✦</span></div>
       {wedding.description&&<blockquote>“{wedding.description}”</blockquote>}

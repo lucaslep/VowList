@@ -45,7 +45,7 @@ export default function Home() {
           <div className="invite-card">
             <div className="invite-flourish">⌁</div><span className="invite-kicker">vamos nos casar</span>
             <h2>Lucas <i>&</i> Gabriella</h2><div className="invite-rule"><span>✦</span></div>
-            <p>09 · 01 · 2028</p><span className="invite-note">Nossa maior alegria é celebrar com você</span>
+            <p>22 · 01 · 2028 · 18h00</p><span className="invite-note">Nossa maior alegria é celebrar com você</span>
           </div>
           <div className="floating-card floating-gift"><span className="floating-icon">♢</span><div><strong>Lista personalizada</strong><small>Escolhida pelo casal</small></div></div>
           <div className="floating-card floating-love"><span>♡</span> Feito com amor</div>
